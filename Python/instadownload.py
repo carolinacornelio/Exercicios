@@ -1,13 +1,11 @@
 import instaloader
 
-L = instaloader.Instaloader()
-user = input("Digite o nome do perfil: ")
+def download():
+    url = input("Digite a URL: ")
+    nome = input("Digite o nome do arquivo: ")
+    L = instaloader.Instaloader()
+    shortcode = url.split("/")[-2]
+    reel_media = instaloader.Post.from_shortcode(L.context, shortcode)
+    L.download_post(reel_media, target=f"{nome}")
 
-try:
-    profile = instaloader.Profile.from_username(L.context, user)
-except instaloader.exceptions.ProfileNotExistsException:
-    print("Perfil não encontrado")
-    exit()
-    
-for post in profile.get_posts():
-    L.download_post(post, target=profile.username) 
+download()
